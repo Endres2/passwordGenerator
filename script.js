@@ -2,7 +2,7 @@
 
 var generateBtn = document.querySelector("#generate");
 
-//Array Characters
+//Array Characters thank you Dan :)
 
 var specialCharacters = [ "@", "%", "+", "\\", "/", "'", "!", "#", "$", "^", "?", ":", ",", ")", "(", "}", "{", "]", "[", "~", "-", "_", ".", ];
 // Array of numeric characters to be included in password
@@ -13,7 +13,8 @@ var lowerCasedCharacters = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "
 var upperCasedCharacters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", ];
 //Empty array for password
 var passwordArray = [];
-
+var passwordChar = [];
+var passwordLength = 0;
 // Write password to the #password input
 function writePassword() {
 
@@ -29,13 +30,20 @@ generateBtn.addEventListener("click", writePassword);
 
 
 var generatePassword =  function(){
-  //passwordArray = [];
-  //selectChar();
-  //passwordSize();
-  buildPassword();
+  //reset local variables to regenerate password as many times as clicked
+  passwordArray = [];
+  passwordChar = [];
+  passwordLength = 0;
+  passwordChar = selectChar();
+  passwordLength = passwordSize();
+  var password = buildPassword(passwordChar,passwordLength);
+  console.log(password);
+  return password;
+  
 }
 // Method to select characters allowed in the password generation, checks if no chacarters are selected, and empties array after every click to generate password.
 var selectChar = function(){
+  //Select types of characters to include in password
   if(confirm("Add lowercase?")){
     passwordArray = passwordArray.concat(lowerCasedCharacters);
     alert("Lowercase added");
@@ -52,6 +60,7 @@ var selectChar = function(){
     passwordArray = passwordArray.concat(specialCharacters);
     alert("Special added");
   }
+  //if passwordArray is empty prompts user to select at least one type of character
   if(!passwordArray.length){
     alert("Choose at least one character type");
     generatePassword();
@@ -64,13 +73,23 @@ var selectChar = function(){
 
 //Method to select size of password to generate, it checks if input is NaN and if number is between specified range 8-128
 var passwordSize = function(){
+  //Prompts user for an input and makes it an integer
   var numberOfChar = parseInt(prompt("Enter how many characters you would like in your password", "Password Length"));
+  //User will be prompted until input is a number and it is in range 8-128
   while(isNaN(numberOfChar) || numberOfChar < 8 || numberOfChar > 128 ){
     numberOfChar = parseInt(prompt("Make sure to enter a number. The character range is 8-128", "Password Length"));
   }
+  //return size for buildPassword method
   return numberOfChar;
 }
 
-var buildPassword = function(){
-  
+var buildPassword = function(characters, size){
+  var awesomePassword=[];
+  //loop as many times as number of characters specified
+  for(let i = 0; i < size; i++){
+    randomIndex = Math.floor(Math.random()*characters.length-1);
+    //Make a string from a randomly selected index based on the length of our returned array
+    awesomePassword.unshift(characters[randomIndex]);
+  }
+  return awesomePassword.join("");
 }
