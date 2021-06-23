@@ -29,10 +29,12 @@ generateBtn.addEventListener("click", writePassword);
 
 
 var generatePassword =  function(){
-  passwordArray = [];
-  selectChar();
-  
+  //passwordArray = [];
+  //selectChar();
+  //passwordSize();
+  buildPassword();
 }
+// Method to select characters allowed in the password generation, checks if no chacarters are selected, and empties array after every click to generate password.
 var selectChar = function(){
   if(confirm("Add lowercase?")){
     passwordArray = passwordArray.concat(lowerCasedCharacters);
@@ -55,7 +57,20 @@ var selectChar = function(){
     generatePassword();
   }
   else{
-    console.log(passwordArray);
+    return passwordArray;
   }
 
+}
+
+//Method to select size of password to generate, it checks if input is NaN and if number is between specified range 8-128
+var passwordSize = function(){
+  var numberOfChar = parseInt(prompt("Enter how many characters you would like in your password", "Password Length"));
+  while(isNaN(numberOfChar) || numberOfChar < 8 || numberOfChar > 128 ){
+    numberOfChar = parseInt(prompt("Make sure to enter a number. The character range is 8-128", "Password Length"));
+  }
+  return numberOfChar;
+}
+
+var buildPassword = function(){
+  
 }
