@@ -36,7 +36,7 @@ var generatePassword =  function(){
   passwordLength = 0;
   passwordChar = selectChar();
   passwordLength = passwordSize();
-  var password = buildPassword(passwordChar,passwordLength);
+  var password = makeRandom(passwordChar,passwordLength);
   console.log(password);
   return password;
   
@@ -87,9 +87,54 @@ var buildPassword = function(characters, size){
   var awesomePassword=[];
   //loop as many times as number of characters specified
   for(let i = 0; i < size; i++){
+    
     randomIndex = Math.floor(Math.random()*characters.length-1);
     //Make a string from a randomly selected index based on the length of our returned array
     awesomePassword.unshift(characters[randomIndex]);
+  }
+  return awesomePassword.join("");
+}
+var makeRandom = function (characters, size){
+  var awesomePassword=[];
+  var choppedPassword=[];
+  var j = 0;
+  for(let i = 0; i< size; i++){
+    //The following if else statemesnt will allow for every type of character selected to be added using percentages of the main characters array
+    if(j == 0){
+    //get first 20%
+    choppedPassword = characters.slice(0, (size.length*.2))
+    randomIndex = Math.floor(Math.random()*choppedPassword.length-1);
+    awesomePassword.unshift(characters[randomIndex]);
+    j++;
+    }
+    if(j == 1){
+    //get 20%-40%
+    choppedPassword =characters.slice((size.length*.2), (size.length*.4))
+    randomIndex = Math.floor(Math.random()*choppedPassword.length-1);
+    awesomePassword.unshift(characters[randomIndex]);
+    j++;
+    }
+    if(j == 2){
+    //get 40%-60%
+    choppedPassword =characters.slice((size.length*.4), (size.length*.6))
+    randomIndex = Math.floor(Math.random()*choppedPassword.length-1);
+    awesomePassword.unshift(characters[randomIndex]);
+    j++;
+   }
+   if(j == 3){
+    //get 60%-80%
+    choppedPassword =characters.slice((size.length*.6), (size.length*.80))
+    randomIndex = Math.floor(Math.random()*choppedPassword.length-1);
+    awesomePassword.unshift(characters[randomIndex]);
+    j++;
+   }
+   if(j==4){
+    //get 80%-100%
+    choppedPassword =characters.slice((size.length*.8), (size.length))
+    randomIndex = Math.floor(Math.random()*choppedPassword.length-1);
+    awesomePassword.unshift(characters[randomIndex]);
+    j = 0;
+  }
   }
   return awesomePassword.join("");
 }
